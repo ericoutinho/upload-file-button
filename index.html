@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload file button</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        *
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            color: #444;
+        }
+
+        .container
+        {
+            margin: 0 auto;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        input[type=file]
+        {
+            display: none;
+        }
+
+        .file-label
+        {
+            text-align: center;
+            padding: .5rem 1.25rem;
+            border-radius: 3px;
+            background-color: #bbb;
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .file-label:hover {
+            background-color: #ccc;
+        }
+
+        .total-files
+        {
+            text-align: center;
+            margin-block: 1rem;
+        }
+
+        .list-files
+        {
+            list-style: none;
+        }
+
+        .list-files li
+        {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #ddd;
+            border-radius: 3px;
+        }
+
+        .list-files li:not(:last-child)
+        {
+            margin-bottom: .5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="file" id="input-file" multiple>
+        <label for="input-file" aria-label="button" class="file-label">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp; Selecionar arquivos
+        </label>
+        <p class="total-files">Nenhum arquivo selecionado</p>
+        <ul class="list-files"></ul>
+    </div>
+
+    <script>
+        const files = document.querySelector("input[type=file]")
+        const items = document.querySelector(".list-files")
+        const total = document.querySelector(".total-files")
+
+        files.addEventListener("change", (target) => {
+            items.innerHTML = ""
+            total.textContent = `${files.files.length} Arquivos Selecionados`
+            for (file of files.files) {
+                let size = (file.size / 1024) >= 1024 ? `${(file.size / 1024).toFixed(1)} MB` : `${(file.size / 1024).toFixed(1)} KB`
+                const li = document.createElement("li")
+                li.innerHTML = `<span>${file.name}</span><span>${size}</span>`
+                items.appendChild(li)
+            }
+        })
+    </script>
+</body>
+</html>
